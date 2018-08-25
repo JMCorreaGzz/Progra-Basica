@@ -1,0 +1,34 @@
+#Tarea 5A
+
+**_Errores_**
+
+1.Error, faltaria el uso de **unsing namespace std;**
+2.Salida *Hola mundo*
+3.Error, el texto contiene mas caracteres de lo que permite el arreglo
+4. Salida *13 es trece*
+5.Salida *a=8 b=4*
+6. Salida *15*
+7. Salida *a=6 b=6*
+8. Salida *True*
+9. Salida *False*
+10. Salida *mo*
+
+
+```cpp
+#include <iostream>
+using namespace std;
+
+void main() {
+	float a = 0;
+	float b = 0;
+		cout << "Introduzca el valor de un numero:" << endl;
+		cin >> a;
+		cout << "Introduzca el valor de otro numero:" << endl;
+		cin >> b;
+		float c = 0;
+			c = sqrt(a + b);
+			cout <<"La raiz cuadrada de la suma de, ambos numeros es: "<< c << endl;
+
+			system("pause");
+ }
+```
