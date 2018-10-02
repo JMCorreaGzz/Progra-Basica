@@ -20,7 +20,7 @@ struct DAl {
 	char m[10];
 	float cal[3];
 };
-DAl  dt [100];
+DAl  dt[100];
 int c = 0;
 int ci = 0;
 
@@ -30,28 +30,28 @@ void main() {
 }
 
 void menu() {
-	
-		system("cls");
-		locale::global(locale("spanish"));
-		cout << "\t\t\t\t\tBienvenido a la agenda digital\n\t\t\t\t\tQue desea hacer?" << endl;
-		cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Editar contacto\n\t\t\t\t\t3. Borrar contacto\n\t\t\t\t\t4. Buscar contacto\n\t\t\t\t\t5. Mostrar todos\n\t\t\t\t\t6. Registrar Calificaciones" << endl;
-		cin >> op;
-	
+
+	system("cls");
+	locale::global(locale("spanish"));
+	cout << "\t\t\t\t\tBienvenido a la agenda digital\n\t\t\t\t\tQue desea hacer?" << endl;
+	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Editar contacto\n\t\t\t\t\t3. Borrar contacto\n\t\t\t\t\t4. Buscar contacto\n\t\t\t\t\t5. Mostrar todos\n\t\t\t\t\t6. Registrar Calificaciones" << endl;
+	cin >> op;
+
 
 	switch (op) {
-	case 1: 
+	case 1:
 		agr();
 		break;
-	case 2: 
+	case 2:
 		ed();
 		break;
-	
-	case 3: 
-		 bo();
+
+	case 3:
+		bo();
 		break;
-	
-	case 4: 
-		 bus();
+
+	case 4:
+		bus();
 		break;
 	case 5:
 		mos();
@@ -60,12 +60,12 @@ void menu() {
 		ca();
 		break;
 	}
-		system("pause");
+	system("pause");
 }
 
-void agr() { 
+void agr() {
 	do {
-		system("cls");
+		system ("cls");
 		cout << "Nombre:" << endl;
 		cin.ignore();
 		getline(cin, dt[c].nom);
@@ -80,7 +80,7 @@ void agr() {
 		cout << "Dirección" << endl;
 		cin.ignore();
 		getline(cin, dt[c].dir);
-		
+
 		ci++;
 		c++;
 		cout << "Es correcta su informacion\n1. Si\n2. No" << endl;
@@ -94,28 +94,46 @@ void bus() {
 	int t = 0;
 	cout << "Inserte la matricula a buscar" << endl;
 	cin >> mb;
-	do{
-		if (dt[t].m == mb) {
+	do {
+		if (strcmp(mb,  dt[t].m) == 0) {
 			cout << "Lo encontre" << endl;
 		}
-		else { t++; }
+	 t++; 
 
-	} while (dt[t].m != mb);
+	} while (t < ci);
 
-	system("pause");
+	menu();
+	
 }
 
 void ed() {
 	system("cls");
 	cout << "Aqui se editaría el contacto" << endl;
-	
+
 }
 
 void bo() {
 	system("cls");
-	cout << "Aqui se borraría el contacto" << endl;
-
+	char mbo[10];
+	int g = 0;
+	cout << "Inserte la matricula del alumno a borrar" << endl;
+	cin >> mbo;
+	for (int i = 0; i < ci; i++) {
+		if (strcmp(mbo, dt[g].m) == 0) {
+			cout << "Encontré a: " << dt[g].m << endl;
+			for (int j = i; j < ci; j++) {
+				dt[j].nom = dt[j + 1].nom;
+				dt[j].ap = dt[j + 1].ap;
+				dt[j].ce = dt[j + 1].ce;
+				dt[j].dir = dt[j + 1].dir;
+			}
+			ci--;
+				break;
+		}
+	}
+	menu();
 }
+
 void ca() {
 	system("cls");
 	for (int i = 0; i < ci; i++) {
@@ -144,14 +162,14 @@ void mos() {
 		cout << dt[s].nom << " " << dt[s].ap << " " << dt[s].ce << " " << dt[s].t << " " << dt[s].m << " " << dt[s].dir << endl;
 		s++;
 		for (int i = 0; i < ci; i++) {
-			
-			cout << "Calificacion 1"<< dt[i].cal[0] << endl;
 
-			
-			cout << "Calificacion 2"<<dt[i].cal[1] << endl;
+			cout << "Calificacion 1" << dt[i].cal[0] << endl;
 
-			
-			cout << "Calificacion 3"<<dt[i].cal[2] << endl;
+
+			cout << "Calificacion 2" << dt[i].cal[1] << endl;
+
+
+			cout << "Calificacion 3" << dt[i].cal[2] << endl;
 		}
 	} while (s < ci);
 	system("pause");
