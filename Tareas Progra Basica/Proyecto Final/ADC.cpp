@@ -20,11 +20,36 @@ struct DAl {
 	char m[10];
 	float cal[3];
 };
+
+void dummy(DAl);
+
 DAl  dt[100];
 int c = 0;
 int ci = 0;
 
 void main() {
+
+	DAl t;
+	t.nom = "Jose";
+	t.ap = "Correa";
+	t.ce = "jose@correa.com";
+	t.dir = "calle";
+	string s = "1812735";
+	strcpy_s(t.m, s.c_str());
+	s = "8111111";
+	strcpy_s(t.t, s.c_str());
+	dummy(t);
+
+	t.nom = "Angel";
+	t.ap = "Hernandez";
+	t.ce = "angel@hdz.com";
+	t.dir = "calle";
+	s = "1814445";
+	strcpy_s(t.m, s.c_str());
+	s = "8111111";
+	strcpy_s(t.t, s.c_str());
+	dummy(t);
+
 	menu();
 
 }
@@ -36,8 +61,6 @@ void menu() {
 	cout << "\t\t\t\t\tBienvenido a la agenda digital\n\t\t\t\t\tQue desea hacer?" << endl;
 	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Editar contacto\n\t\t\t\t\t3. Borrar contacto\n\t\t\t\t\t4. Buscar contacto\n\t\t\t\t\t5. Mostrar todos\n\t\t\t\t\t6. Registrar Calificaciones" << endl;
 	cin >> op;
-
-
 	switch (op) {
 	case 1:
 		agr();
@@ -63,29 +86,39 @@ void menu() {
 	system("pause");
 }
 
+void dummy(DAl d) {
+	dt[ci] = d;
+	ci++;
+}
+
 void agr() {
 	do {
-		system ("cls");
-		cout << "Nombre:" << endl;
-		cin.ignore();
-		getline(cin, dt[c].nom);
-		cout << "Apellidos:" << endl;
-		getline(cin, dt[c].ap);
-		cout << "Correo electronico:" << endl;
-		getline(cin, dt[c].ce);
-		cout << "Telefono:" << endl;
-		cin >> dt[c].t;
-		cout << "Matricula:" << endl;
-		cin >> dt[c].m;
-		cout << "Dirección" << endl;
-		cin.ignore();
-		getline(cin, dt[c].dir);
+		do {
+			system("cls");
+			cout << "Nombre:" << endl;
+			cin.ignore();
+			getline(cin, dt[c].nom);
+			cout << "Apellidos:" << endl;
+			getline(cin, dt[c].ap);
+			cout << "Correo electronico:" << endl;
+			getline(cin, dt[c].ce);
+			cout << "Telefono:" << endl;
+			cin >> dt[c].t;
+			cout << "Matricula:" << endl;
+			cin >> dt[c].m;
+			cout << "Dirección" << endl;
+			cin.ignore();
+			getline(cin, dt[c].dir);
 
-		ci++;
-		c++;
-		cout << "Es correcta su informacion\n1. Si\n2. No" << endl;
+			ci++;
+			c++;
+			cout << "Es correcta su informacion\n1. Si\n2. No" << endl;
+			cin >> op;
+		} while (op != 1);
+		system("cls");
+		cout << "Desea agregar otro alumno \n1. Si \n2. No" << endl;
 		cin >> op;
-	} while (op != 1);
+	} while (op != 2);
 	menu();
 }
 void bus() {
@@ -96,36 +129,56 @@ void bus() {
 	cin >> mb;
 	do {
 		if (strcmp(mb,  dt[t].m) == 0) {
-			cout << "Lo encontre" << endl;
+			system("cls");
+			cout << "Encontre a: " << dt[t].nom << " " << dt[t].ap<< " " << dt[t].m << "\n Que deseas hacer?\n1. Borrar\n2. Editar Contacto\n3. Editar calificaciones" << endl;
+			cin >> op;
+			switch (op) {
+			case 1: 
+				bo();
+				break;
+			case 2: 
+				ed();
+				break;
+			case 3:
+				ced();
+				break;
+			}
 		}
+		else { cout << "Alumno no encontrado" << endl; }
 	 t++; 
 
 	} while (t < ci);
-
+	system("pause");
 	menu();
 	
 }
 
 void ed() {
 	system("cls");
-	cout << "Aqui se editaría el contacto" << endl;
+	char med[10];
+	int w = 0;
+		while (w < ci) {
+			cout << "Que almuno deseas editar? Inserte su Matricula" << endl;
+			cin >> med;
+			if (strcmp(med, dt[w].m) == 0) {
+				cout << " Que parte deseas editar? \n1 .Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
+				cin >> op;
+			}
+			w++;
+		}
 
 }
 
 void bo() {
 	system("cls");
 	char mbo[10];
-	int g = 0;
 	cout << "Inserte la matricula del alumno a borrar" << endl;
 	cin >> mbo;
 	for (int i = 0; i < ci; i++) {
-		if (strcmp(mbo, dt[g].m) == 0) {
-			cout << "Encontré a: " << dt[g].m << endl;
+		if (strcmp(mbo, dt[i].m) == 0) {
+			cout << "Encontré a: " << dt[i].m << endl;
 			for (int j = i; j < ci; j++) {
-				dt[j].nom = dt[j + 1].nom;
-				dt[j].ap = dt[j + 1].ap;
-				dt[j].ce = dt[j + 1].ce;
-				dt[j].dir = dt[j + 1].dir;
+				dt[j] = dt[j + 1];
 			}
 			ci--;
 				break;
