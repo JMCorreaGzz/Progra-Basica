@@ -38,6 +38,9 @@ void main() {
 	strcpy_s(t.m, s.c_str());
 	s = "8111111";
 	strcpy_s(t.t, s.c_str());
+	t.cal[0] = 100;
+	t.cal[1] = 100;
+	t.cal[2] = 100;
 	dummy(t);
 
 	t.nom = "Angel";
@@ -48,6 +51,9 @@ void main() {
 	strcpy_s(t.m, s.c_str());
 	s = "8111111";
 	strcpy_s(t.t, s.c_str());
+	t.cal[0] = 50;
+	t.cal[1] = 50;
+	t.cal[2] = 50;
 	dummy(t);
 
 	menu();
@@ -59,28 +65,20 @@ void menu() {
 	system("cls");
 	locale::global(locale("spanish"));
 	cout << "\t\t\t\t\tBienvenido a la agenda digital\n\t\t\t\t\tQue desea hacer?" << endl;
-	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Editar contacto\n\t\t\t\t\t3. Borrar contacto\n\t\t\t\t\t4. Buscar contacto\n\t\t\t\t\t5. Mostrar todos\n\t\t\t\t\t6. Registrar Calificaciones" << endl;
+	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Borrar Contacto\n\t\t\t\t\t3. Buscar contacto\n\t\t\t\t\t4. Mostrar todos\n\t\t\t\t\t" << endl;
 	cin >> op;
 	switch (op) {
 	case 1:
 		agr();
 		break;
 	case 2:
-		ed();
-		break;
-
-	case 3:
 		bo();
 		break;
-
-	case 4:
+	case 3:
 		bus();
 		break;
-	case 5:
+	case 4:
 		mos();
-		break;
-	case 6:
-		ca();
 		break;
 	}
 	system("pause");
@@ -97,21 +95,25 @@ void agr() {
 			system("cls");
 			cout << "Nombre:" << endl;
 			cin.ignore();
-			getline(cin, dt[c].nom);
+			getline(cin, dt[ci].nom);
 			cout << "Apellidos:" << endl;
-			getline(cin, dt[c].ap);
+			getline(cin, dt[ci].ap);
 			cout << "Correo electronico:" << endl;
-			getline(cin, dt[c].ce);
+			getline(cin, dt[ci].ce);
 			cout << "Telefono:" << endl;
-			cin >> dt[c].t;
+			cin >> dt[ci].t;
 			cout << "Matricula:" << endl;
-			cin >> dt[c].m;
+			cin >> dt[ci].m;
 			cout << "Dirección" << endl;
 			cin.ignore();
-			getline(cin, dt[c].dir);
-
+			getline(cin, dt[ci].dir);
+			cout << "Introduzca la calificacion 1:" << endl;
+			cin >> dt[ci].cal[0];
+			cout << "Introduzca la calificacion 2:" << endl;
+			cin >> dt[ci].cal[1];
+			cout << "Introduzca la calificacion 3:" << endl;
+			cin >> dt[ci].cal[2];
 			ci++;
-			c++;
 			cout << "Es correcta su informacion\n1. Si\n2. No" << endl;
 			cin >> op;
 		} while (op != 1);
@@ -146,7 +148,7 @@ void bus() {
 		}
 		else { cout << "Alumno no encontrado" << endl; }
 	 t++; 
-
+	
 	} while (t < ci);
 	system("pause");
 	menu();
@@ -158,15 +160,40 @@ void ed() {
 	char med[10];
 	int w = 0;
 		while (w < ci) {
-			cout << "Que almuno deseas editar? Inserte su Matricula" << endl;
-			cin >> med;
-			if (strcmp(med, dt[w].m) == 0) {
-				cout << " Que parte deseas editar? \n1 .Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
-				cin >> op;
-			}
-			w++;
-		}
-
+			
+				cout << "Que almuno deseas editar? Inserte su Matricula" << endl;
+				cin >> med;
+				system("cls");
+				if (strcmp(med, dt[w].m) == 0) {
+					cout << " " << dt[w].nom << " " << dt[w].ap << " " << dt[w].m << " " << dt[w].t << " " << dt[w].dir << " " << dt[w].ce << endl;
+					cout << " Que parte deseas editar? \n1. Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
+					cin >> op;
+					switch (op) {
+					case 1: cout << "Nombre nuevo:" << endl;
+						cin.ignore();
+						getline(cin, dt[w].nom);
+						break;
+					case 2: cout << "Apellido(s) nuevo(s)" << endl;
+						getline(cin, dt[w].ap);
+						break;
+					case 3: cout << "Telefono nuevo" << endl;
+						cin >> dt[w].t;
+						break;
+					case 4: cout << "Matricula nueva" << endl;
+						cin >> dt[w].m;
+						break;
+					case 5: cout << "Direccion nueva" << endl;
+						cin.ignore();
+						getline(cin, dt[w].dir);
+					case 6: cout << "Correo electronico nuevo" << endl;
+						getline(cin, dt[w].ce);
+						break;
+					}
+				} break;
+				w++;
+				
+			} 
+		menu();
 }
 
 void bo() {
@@ -206,24 +233,43 @@ void ca() {
 
 }
 void ced() {
-	cout << "Aqui se editan las calificaciones" << endl;
+	system("cls");
+	char mce[10]; 
+	int f = 0;
+	cout << "A que alumno desea modificar su calificacion? Ingrese la matricula" << endl;
+	cin >> mce;
+	while (f < ci) {
+		system("cls");
+		if (strcmp(mce, dt[f].m) == 0) {
+			cout << dt[f].nom << " " << dt[f].ap << "\nCalificacion 1\t " << dt[f].cal[0] << "\nCalificacion 2\t " << dt[f].cal[1] << "\nCalificacion 3\t " << dt[f].cal[2] << endl;
+			cout << "Que calificacion deseas modificar?" << endl;
+			cin >> op;
+			switch (op) {
+			case 1: cout << "Nueva calificacion 1: " << endl;
+				cin >> dt[f].cal[0];
+				break;
+			case 2: cout << "Nueva calificacion 2: " << endl;
+				cin >> dt[f].cal[1];
+				break;
+			case 3: cout << "Nueva calificacion 3: " << endl;
+				cin >> dt[f].cal[2];
+				break;
+			}
+			break;
+		}
+		f++;
+	}
+	menu();
 }
 void mos() {
 	system("cls");
 	int s = 0;
 	do {
 		cout << dt[s].nom << " " << dt[s].ap << " " << dt[s].ce << " " << dt[s].t << " " << dt[s].m << " " << dt[s].dir << endl;
+		cout << "Calificacion 1 " << dt[s].cal[0] << endl;
+		cout << "Calificacion 2 " << dt[s].cal[1] << endl;
+		cout << "Calificacion 3 " << dt[s].cal[2] << endl;
 		s++;
-		for (int i = 0; i < ci; i++) {
-
-			cout << "Calificacion 1" << dt[i].cal[0] << endl;
-
-
-			cout << "Calificacion 2" << dt[i].cal[1] << endl;
-
-
-			cout << "Calificacion 3" << dt[i].cal[2] << endl;
-		}
 	} while (s < ci);
 	system("pause");
 	menu();
