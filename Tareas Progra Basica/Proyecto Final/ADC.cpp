@@ -10,7 +10,6 @@ void ca();
 void ced();
 void mos();
 void menu();
-bool compm();
 int op = 0;
 
 struct DAl {
@@ -19,7 +18,7 @@ struct DAl {
 	string ap;
 	string dir;
 	char t[12];
-	char m[10];
+	char m[15];
 	float cal[3];
 };
 
@@ -201,42 +200,91 @@ void bus() {
 
 void ed() {
 	system("cls");
-	char med[10];
+	char med[15];
 	int w = 0;
-		while (w < ci) {
-				cout << "Que almuno deseas editar? Inserte su Matricula" << endl;
-				cin >> med;
-				system("cls");
-				if (strcmp(med, dt[w].m) == 0) {
-					cout << " " << dt[w].nom << " " << dt[w].ap << " " << dt[w].m << " " << dt[w].t << " " << dt[w].dir << " " << dt[w].ce << endl;
-					cout << " Que parte deseas editar? \n1. Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
-					cin >> op;
-					switch (op) {
-					case 1: cout << "Nombre nuevo:" << endl;
-						cin.ignore();
-						getline(cin, dt[w].nom);
-						break;
-					case 2: cout << "Apellido(s) nuevo(s)" << endl;
-						getline(cin, dt[w].ap);
-						break;
-					case 3: cout << "Telefono nuevo" << endl;
-						cin >> dt[w].t;
-						break;
-					case 4: cout << "Matricula nueva" << endl;
-						cin >> dt[w].m;
-						break;
-					case 5: cout << "Direccion nueva" << endl;
-						cin.ignore();
-						getline(cin, dt[w].dir);
-					case 6: cout << "Correo electronico nuevo" << endl;
-						getline(cin, dt[w].ce);
+	cout << "Que almuno deseas editar? Inserte su Matricula" << endl;
+	cin >> med;
+	system("cls");
+do{
+	do {
+		if (strcmp(med, dt[w].m) == 0) {
+			cout << " " << dt[w].nom << " " << dt[w].ap << " " << dt[w].m << " " << dt[w].t << " " << dt[w].dir << " " << dt[w].ce << endl;
+			cout << " Que parte deseas editar? \n1. Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
+			cin >> op;
+			switch (op) {
+			case 1: cout << "Nombre nuevo:" << endl;
+				cin.ignore();
+				getline(cin, dt[w].nom);
+				break;
+			case 2: cout << "Apellido(s) nuevo(s)" << endl;
+				getline(cin, dt[w].ap);
+				break;
+			case 3:
+			{bool ved;
+			cin.ignore();
+			do {
+				cout << "Telefono nuevo:" << endl;
+				cin >> dt[w].t;
+				int cve = 0;
+				int cnve = 0;
+				int size = strlen(dt[w].t);
+				for (int i = 0; i < size; i++) {
+					if (dt[w].t[i] >= 48 && dt[w].t[i] <= 57) {
+						cnve++;
+					}
+					else {
+						cve++;
+					}
+				}
+				ved = true;
+				if (cve > 0) { ved = false; cout << "No todos son numeros" << endl; }
+				else if (cnve < 8 || cnve > 12) { ved = false; cout << "No son los 8 ó 12 números" << endl; }
+			} while (ved == false);
+
+			break; }
+			case 4:
+			{bool mme;
+			do {
+				cout << "Matricula nueva:" << endl;
+				cin >> dt[w].m;
+				int cme = 0;
+				int clme = 0;
+				int tame = strlen(dt[w].m);
+				for (int i = 0; i < tame; i++) {
+					if (dt[w].m[i] >= 48 && dt[w].m[i] <= 57) {
+						clme++;
+					}
+					else {
+						cme++;
+					}
+				} mme = true;
+				if (cme > 0) { mme = false; cout << "No todos son numeros" << endl; }
+				else if (clme > 15) { mme = false; cout << "Exceso de numeros para matricula" << endl; }
+				for (int j = 0; j < ci; j++) {
+					if (strcmp(dt[w].m, dt[j].m) == 0) {
+						cout << "Matricula no disponible" << endl;
+						mme = false;
 						break;
 					}
-				} break;
-				w++;
-				
-			} 
-		menu();
+				}
+			} while (mme == false);
+			break; }
+			case 5: cout << "Direccion nueva" << endl;
+				cin.ignore();
+				getline(cin, dt[w].dir);
+			case 6: cout << "Correo electronico nuevo" << endl;
+				getline(cin, dt[w].ce);
+				break;
+			}
+		}
+		w++;
+	} while (w < ci);
+	cout << "Deseas cambiar otro dato\n1. Si\n2. No" << endl;
+	cin >> op;
+}while (op != 1);
+	
+	menu();
+
 }
 
 void bo() {
