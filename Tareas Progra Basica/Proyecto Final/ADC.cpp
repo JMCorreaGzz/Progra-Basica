@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <fstream>
 using namespace std;
 void agr();
 void bus();
@@ -18,7 +17,7 @@ struct DAl {
 	string ap;
 	string dir;
 	char t[12];
-	char m[15];
+	string m;
 	float cal[3];
 };
 
@@ -29,27 +28,27 @@ DAl  dt[100];
 int ci = 0;
 
 void main() {
-
+	locale::global(locale("spanish"));
 	DAl t;
 	t.nom = "Jose";
 	t.ap = "Correa";
 	t.ce = "jose@correa.com";
 	t.dir = "calle";
 	string s = "1812735";
-	strcpy_s(t.m, s.c_str());
+	t.m = s;
 	s = "8111111";
 	strcpy_s(t.t, s.c_str());
 	t.cal[0] = 100;
 	t.cal[1] = 100;
 	t.cal[2] = 100;
 	dummy(t);
-
+	
 	t.nom = "Angel";
 	t.ap = "Hernandez";
 	t.ce = "angel@hdz.com";
 	t.dir = "calle";
 	s = "1814445";
-	strcpy_s(t.m, s.c_str());
+	t.m = s;
 	s = "8111111";
 	strcpy_s(t.t, s.c_str());
 	t.cal[0] = 50;
@@ -64,9 +63,8 @@ void main() {
 void menu() {
 
 	system("cls");
-	locale::global(locale("spanish"));
 	cout << "\t\t\t\t\tBienvenido a la agenda digital\n\t\t\t\t\tQue desea hacer?" << endl;
-	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Borrar Contacto\n\t\t\t\t\t3. Buscar contacto\n\t\t\t\t\t4. Mostrar todos\n\t\t\t\t\t" << endl;
+	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Borrar Contacto\n\t\t\t\t\t3. Buscar contacto\n\t\t\t\t\t4. Mostrar todos\n\t\t\t\t\t5. Agregar calificaciones" << endl;
 	cin >> op;
 	switch (op) {
 	case 1:
@@ -81,6 +79,9 @@ void menu() {
 	case 4:
 		mos();
 		break;
+	case 5:
+		ca();
+			break;
 	}
 	system("pause");
 }
@@ -123,39 +124,21 @@ void agr() {
 			} while (v == false);
 			bool m;
 			do {
+				cin.ignore();
 				cout << "Matricula:" << endl;
-				cin >> dt[ci].m;
-				int cm = 0;
-				int clm = 0;
-				int tam = strlen(dt[ci].m);
-					for (int i = 0; i < tam; i++) {
-						if (dt[ci].m[i] >= 48 && dt[ci].m[i] <= 57) {
-							clm++;
-						}
-						else {
-							cm++;
-						}
-					} m = true;
-					if (cm > 0) { m = false; cout << "No todos son numeros" << endl; }
-					else if (clm > 15) { m = false; cout<< "Exceso de numeros para matricula" << endl; }
+				getline(cin, dt[ci].m);
 					for (int j = 0; j < ci; j++) {
-						if (strcmp(dt[ci].m, dt[j].m) == 0) {
+						string t = dt[ci].m;
+						if (t == dt[j].m) {
 							cout << "Matricula no disponible" << endl;
 							m = false;
 							break;
 						} 
+						else { m = true; break; }
 					}
 			} while (m == false);
 			cout << "Dirección" << endl;
-			cin.ignore();
 			getline(cin, dt[ci].dir);
-			cin.ignore();
-			cout << "Introduzca la calificacion 1:" << endl;
-			cin >> dt[ci].cal[0];
-			cout << "Introduzca la calificacion 2:" << endl;
-			cin >> dt[ci].cal[1];
-			cout << "Introduzca la calificacion 3:" << endl;
-			cin >> dt[ci].cal[2];
 			ci++;
 			cout << "Es correcta su informacion\n1. Si\n2. No" << endl;
 			cin >> op;
@@ -168,12 +151,13 @@ void agr() {
 }
 void bus() {
 	system("cls");
-	char mb[10];
+	string mb;
 	int t = 0;
+	cin.ignore();
 	cout << "Inserte la matricula a buscar" << endl;
-	cin >> mb;
+	getline(cin, mb);
 	do {
-		if (strcmp(mb,  dt[t].m) == 0) {
+		if (mb ==  dt[t].m) {
 			system("cls");
 			cout << "Encontre a: " << dt[t].nom << " " << dt[t].ap<< " " << dt[t].m << "\n Que deseas hacer?\n1. Borrar\n2. Editar Contacto\n3. Editar calificaciones" << endl;
 			cin >> op;
@@ -200,14 +184,15 @@ void bus() {
 
 void ed() {
 	system("cls");
-	char med[15];
 	int w = 0;
+	string med;
+	cin.ignore();
 	cout << "Que almuno deseas editar? Inserte su Matricula" << endl;
-	cin >> med;
+    getline(cin, med);
 	system("cls");
 do{
 	do {
-		if (strcmp(med, dt[w].m) == 0) {
+		if (med == dt[w].m) {
 			cout << " " << dt[w].nom << " " << dt[w].ap << " " << dt[w].m << " " << dt[w].t << " " << dt[w].dir << " " << dt[w].ce << endl;
 			cout << " Que parte deseas editar? \n1. Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
 			cin >> op;
@@ -245,32 +230,21 @@ do{
 			case 4:
 			{bool mme;
 			do {
+				cin.ignore();
 				cout << "Matricula nueva:" << endl;
-				cin >> dt[w].m;
-				int cme = 0;
-				int clme = 0;
-				int tame = strlen(dt[w].m);
-				for (int i = 0; i < tame; i++) {
-					if (dt[w].m[i] >= 48 && dt[w].m[i] <= 57) {
-						clme++;
-					}
-					else {
-						cme++;
-					}
-				} mme = true;
-				if (cme > 0) { mme = false; cout << "No todos son numeros" << endl; }
-				else if (clme > 15) { mme = false; cout << "Exceso de numeros para matricula" << endl; }
+				getline(cin, dt[w].m);
 				for (int j = 0; j < ci; j++) {
-					if (strcmp(dt[w].m, dt[j].m) == 0) {
+					string tmp = dt[w].m;
+					if (tmp == dt[j].m) {
 						cout << "Matricula no disponible" << endl;
 						mme = false;
 						break;
 					}
+					else { mme = true; break; }
 				}
 			} while (mme == false);
 			break; }
 			case 5: cout << "Direccion nueva" << endl;
-				cin.ignore();
 				getline(cin, dt[w].dir);
 			case 6: cout << "Correo electronico nuevo" << endl;
 				getline(cin, dt[w].ce);
@@ -281,7 +255,7 @@ do{
 	} while (w < ci);
 	cout << "Deseas cambiar otro dato\n1. Si\n2. No" << endl;
 	cin >> op;
-}while (op != 1);
+}while (op != 2);
 	
 	menu();
 
@@ -289,11 +263,12 @@ do{
 
 void bo() {
 	system("cls");
-	char mbo[10];
+	string mbo;
 	cout << "Inserte la matricula del alumno a borrar" << endl;
-	cin >> mbo;
+	cin.ignore();
+	getline(cin, mbo);
 	for (int i = 0; i < ci; i++) {
-		if (strcmp(mbo, dt[i].m) == 0) {
+		if (mbo == dt[i].m) {
 			cout << "Encontré a: " << dt[i].m << endl;
 			for (int j = i; j < ci; j++) {
 				dt[j] = dt[j + 1];
@@ -308,43 +283,93 @@ void bo() {
 void ca() {
 	system("cls");
 	for (int i = 0; i < ci; i++) {
-		cout << "Introduzca cal1" << endl;
-		cin >> dt[i].cal[0];
+		system("cls");
+		cout << dt[i].nom << " " << dt[i].ap << " " << dt[i].m << endl;
+		bool c1;
+		do {
+			cout << "Introduzca cal1" << endl;
+			cin >> dt[i].cal[0];
+			if (dt[i].cal[0] < 0 || dt[i].cal[0]>100) {
+				cout << "Por favor introduzca valores validos" << endl;
+				c1 = false;
+			}
+			else { c1 = true; }
+		} while (c1 == false);
+		bool c2;
+		do {
+			cout << "Introduzca cal2" << endl;
+			cin >> dt[i].cal[1];
+			if (dt[i].cal[1] < 0 || dt[i].cal[1]>100) {
+				cout << "Por favor introduzca valores validos" << endl;
+				c2 = false;
+			}
+			else { c2 = true; }
+		} while (c2 == false);
+		bool c3;
+		do {
+			cout << "Introduzca cal3" << endl;
+			cin >> dt[i].cal[2];
+			if (dt[i].cal[2] < 0 || dt[i].cal[2]>100) {
+				cout << "Por favor introduzca valores validos" << endl;
+				c3 = false;
+			}
+			else { c3 = true; }
+		} while (c3 == false);
 
-		cout << "Introduzca cal2" << endl;
-		cin >> dt[i].cal[1];
 
-		cout << "Introduzca cal3" << endl;
-		cin >> dt[i].cal[2];
+		
 
 	}
-
-
 	menu();
-
 }
+
 void ced() {
 	system("cls");
-	char mce[10]; 
+	string mce; 
 	int f = 0;
 	cout << "A que alumno desea modificar su calificacion? Ingrese la matricula" << endl;
-	cin >> mce;
+	cin.ignore();
+	getline(cin, mce);
 	while (f < ci) {
 		system("cls");
-		if (strcmp(mce, dt[f].m) == 0) {
+		if (mce == dt[f].m) {
 			cout << dt[f].nom << " " << dt[f].ap << "\nCalificacion 1\t " << dt[f].cal[0] << "\nCalificacion 2\t " << dt[f].cal[1] << "\nCalificacion 3\t " << dt[f].cal[2] << endl;
 			cout << "Que calificacion deseas modificar?" << endl;
 			cin >> op;
 			switch (op) {
-			case 1: cout << "Nueva calificacion 1: " << endl;
+			case 1: 
+			{bool c1d;
+			do {
+				cout << "Nueva calificacion 1: " << endl;
 				cin >> dt[f].cal[0];
-				break;
-			case 2: cout << "Nueva calificacion 2: " << endl;
-				cin >> dt[f].cal[1];
-				break;
-			case 3: cout << "Nueva calificacion 3: " << endl;
-				cin >> dt[f].cal[2];
-				break;
+				if (dt[f].cal[0] < 0 || dt[f].cal[0]>100) {
+					cout << "Por favor introduzca valores validos" << endl;
+					c1d = false;
+				} else { c1d = true; }
+			} while (c1d == false);
+			break; }
+			case 2: { bool c2d;
+				do {
+					cout << "Nueva calificacion 2: " << endl;
+					cin >> dt[f].cal[1];
+					if (dt[f].cal[1] < 0 || dt[f].cal[1]>100) {
+						cout << "Por favor introduzca valores validos" << endl;
+						c2d = false;
+					}
+					else { c2d = true; }
+				} while (c2d == false);
+				break; }
+			case 3: { bool c3d;
+				do {
+					cout << "Nueva calificacion 3: " << endl;
+					cin >> dt[f].cal[2];
+					if (dt[f].cal[2] < 0 || dt[f].cal[2]>100) {
+						cout << "Por favor introduzca valores validos" << endl;
+						c3d = false;
+					}
+					else { c3d = true; }
+				} while (c3d == false);
+				break; }
 			}
 			break;
 		}
