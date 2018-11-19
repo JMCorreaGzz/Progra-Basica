@@ -12,8 +12,8 @@ void ced();
 void mos();
 void menu();
 void sa();
-int op = 0;
-
+char op = 0;
+bool mee;
 struct DAl {
 	string nom;
 	string ce;
@@ -34,7 +34,7 @@ void main() {
 	locale::global(locale("spanish"));
 	DAl t;
 	ifstream archivo;
-	archivo.open("ejemplo.txt", ios::in);
+	archivo.open("Alumnos.txt", ios::in);
 	if (archivo.fail()) {
 		cout << "No hay archivo";
 	}
@@ -75,24 +75,34 @@ void menu() {
 	system("cls");
 	cout << "\t\t\t\t\tBienvenido a la agenda digital\n\t\t\t\t\tQue desea hacer?" << endl;
 	cout << "\t\t\t\t\t1. Agregar contacto\n\t\t\t\t\t2. Borrar Contacto\n\t\t\t\t\t3. Buscar contacto\n\t\t\t\t\t4. Mostrar todos\n\t\t\t\t\t5. Agregar calificaciones\n\t\t\t\t\t6. Salir" << endl;
-	cin >> op;
+	
+	do {
+		cin >> op;
+		if (op < 49 || op > 54) {
+			cout << "Introduzca una opción valida" << endl;
+			mee = false;
+		}
+		else { mee = true; break; }
+
+	} while (mee == false);
+
 	switch (op) {
-	case 1:
+	case 49:
 		agr();
 		break;
-	case 2:
+	case 50:
 		bo();
 		break;
-	case 3:
+	case 51:
 		bus();
 		break;
-	case 4:
+	case 52:
 		mos();
 		break;
-	case 5:
+	case 53:
 		ca();
 		break;
-	case 6:
+	case 54:
 		sa();
 		break;
 	}
@@ -123,7 +133,7 @@ void agr() {
 				string str3 = ".com";
 				if ((str.find(str2) != string::npos) && (str.find(str3) != string::npos)) {
 					ce = true;
-				}
+				} 
 			} while (ce == false);
 			bool v;
 			cin.ignore();
@@ -165,11 +175,11 @@ void agr() {
 			ci++;
 			cout << "Es correcta su informacion\n1. Si\n2. No" << endl;
 			cin >> op;
-	     } while (op != 1);
+	     } while (op != 49);
 		system("cls");
 		cout << "Desea agregar otro alumno \n1. Si \n2. No" << endl;
 		cin >> op;
-	} while (op != 2);
+	} while (op != 50);
 	menu();
 }
 
@@ -184,15 +194,19 @@ void bus() {
 		if (mb == dt[t].m) {
 			system("cls");
 			cout << "Encontre a: " << dt[t].nom << " " << dt[t].ap << " " << dt[t].m << "\n Que deseas hacer?\n1. Borrar\n2. Editar Contacto\n3. Editar calificaciones" << endl;
-			cin >> op;
+			do {
+				cin >> op;
+				cout << "Por favor Introduzca una opción valida" << endl;
+
+			} while (op < 49 || op>51);
 			switch (op) {
-			case 1:
+			case 49:
 				bo();
 				break;
-			case 2:
+			case 50:
 				ed();
 				break;
-			case 3:
+			case 51:
 				ced();
 				break;
 			}
@@ -219,16 +233,26 @@ void ed() {
 			if (med == dt[w].m) {
 				cout << " " << dt[w].nom << " " << dt[w].ap << " " << dt[w].m << " " << dt[w].t << " " << dt[w].dir << " " << dt[w].ce << endl;
 				cout << " Que parte deseas editar? \n1. Nombre\n2. Apellido\n3. Telefono\n4. Matricula\n5. Direccion\n6. Correo Electronico" << endl;
-				cin >> op;
+				
+				do {
+					cin >> op;
+					if (op < 49 || op > 54) {
+						cout << "Introduzca una opción valida" << endl;
+						mee = false;
+					}
+					else { mee = true; break; }
+
+				} while (mee == false);
+
 				switch (op) {
-				case 1: cout << "Nombre nuevo:" << endl;
+				case 49: cout << "Nombre nuevo:" << endl;
 					cin.ignore();
 					getline(cin, dt[w].nom);
 					break;
-				case 2: cout << "Apellido(s) nuevo(s)" << endl;
+				case 50: cout << "Apellido(s) nuevo(s)" << endl;
 					getline(cin, dt[w].ap);
 					break;
-				case 3:
+				case 51:
 				{bool ved;
 				cin.ignore();
 				do {
@@ -251,7 +275,7 @@ void ed() {
 				} while (ved == false);
 
 				break; }
-				case 4:
+				case 52:
 				{bool mme;
 				do {
 					cin.ignore();
@@ -268,9 +292,9 @@ void ed() {
 					}
 				} while (mme == false);
 				break; }
-				case 5: cout << "Direccion nueva" << endl;
+				case 53: cout << "Direccion nueva" << endl;
 					getline(cin, dt[w].dir);
-				case 6: cout << "Correo electronico nuevo" << endl;
+				case 54: cout << "Correo electronico nuevo" << endl;
 					getline(cin, dt[w].ce);
 					break;
 				}
@@ -279,7 +303,7 @@ void ed() {
 		} while (w < ci);
 		cout << "Deseas cambiar otro dato\n1. Si\n2. No" << endl;
 		cin >> op;
-	} while (op != 2);
+	} while (op != 50);
 
 	menu();
 
@@ -359,9 +383,18 @@ void ced() {
 		if (mce == dt[f].m) {
 			cout << dt[f].nom << " " << dt[f].ap << "\nCalificacion 1\t " << dt[f].cal[0] << "\nCalificacion 2\t " << dt[f].cal[1] << "\nCalificacion 3\t " << dt[f].cal[2] << endl;
 			cout << "Que calificacion deseas modificar?" << endl;
-			cin >> op;
+			do {
+				cin >> op;
+				if (op < 49 || op > 54) {
+					cout << "Introduzca una opción valida" << endl;
+					mee = false;
+				}
+				else { mee = true; break; }
+
+			} while (mee == false);
+
 			switch (op) {
-			case 1:
+			case 49:
 			{bool c1d;
 			do {
 				cout << "Nueva calificacion 1: " << endl;
@@ -373,7 +406,7 @@ void ced() {
 				else { c1d = true; }
 			} while (c1d == false);
 			break; }
-			case 2: { bool c2d;
+			case 50: { bool c2d;
 				do {
 					cout << "Nueva calificacion 2: " << endl;
 					cin >> dt[f].cal[1];
@@ -384,7 +417,7 @@ void ced() {
 					else { c2d = true; }
 				} while (c2d == false);
 				break; }
-			case 3: { bool c3d;
+			case 51: { bool c3d;
 				do {
 					cout << "Nueva calificacion 3: " << endl;
 					cin >> dt[f].cal[2];
@@ -407,6 +440,8 @@ void mos() {
 	int s = 0;
 	do {
 		cout << dt[s].nom << " " << dt[s].ap << " " << dt[s].ce << " " << dt[s].t << " " << dt[s].m << " " << dt[s].dir << endl;
+		cout << fixed;
+		cout << setprecision(2); 
 		cout << "Calificacion 1 " << dt[s].cal[0] << endl;
 		cout << "Calificacion 2 " << dt[s].cal[1] << endl;
 		cout << "Calificacion 3 " << dt[s].cal[2] << endl << endl;
@@ -419,16 +454,23 @@ void mos() {
 void sa() {
 	cout << "Adios" << endl;
 	ofstream archivo;
-	archivo.open("ejemplo.txt", ios::app);
+	double prom;
+	archivo.open("Alumnos.txt", ios::app);
 	for (int i = 0; i < ci; i++) {
 		archivo << "Nombre: " << dt[i].nom << " " << dt[i].ap << endl;
 		archivo << "Numero de telefono: " << dt[i].t << endl;
 		archivo << "Mail:" << dt[i].ce << endl;
 		archivo << "Matrícula: " << dt[i].m << endl;
+		cout << fixed;
+		cout << setprecision(2);
 		archivo << "Calificacíon 1: " << dt[i].cal[0] << endl;
 		archivo << "Calificacíon 2: " << dt[i].cal[1] << endl;
 		archivo << "Calificacíon 3: " << dt[i].cal[2] << endl;
-		archivo << "Promedio:" << ((dt[i].cal[0]*.30) + (dt[i].cal[1]*.45) + (dt[i].cal[2]*.25)) << endl;
+		prom = (dt[i].cal[0] * .30) + (dt[i].cal[1] * .45) + (dt[i].cal[2] * .25);
+		if (dt[i].cal[0] == 0 || dt[i].cal[1] == 0 || dt[i].cal[2] == 0) {
+			prom = 0;
+		}
+		archivo << "Promedio:" << prom << endl;
 		archivo << "Calle:" << dt[i].dir << endl;
 	}
 	archivo.close();
@@ -436,7 +478,7 @@ void sa() {
 	cout << "¿Desea borrar los registrados?\n1. si\n2. No" << endl;
 	cin >> si;
 	if (si == 1) {
-		remove("ejemplo.txt");
+		remove("Alumnos.txt");
 	}
 	else {
 		exit(1);
