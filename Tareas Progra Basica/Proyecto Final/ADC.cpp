@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <iomanip>
+#include <iomanip>  //Libreria necesaria para el truncamiento de las calificaciones
 using namespace std;
 void agr();
 void bus();
@@ -124,7 +124,7 @@ void agr() {
 			getline(cin, dt[ci].nom);
 			cout << "Apellidos:" << endl;
 			getline(cin, dt[ci].ap);
-			bool ce;
+			bool ce=false;
 			do {
 				cout << "Correo electronico:" << endl;
 				getline(cin, dt[ci].ce);
@@ -133,7 +133,8 @@ void agr() {
 				string str3 = ".com";
 				if ((str.find(str2) != string::npos) && (str.find(str3) != string::npos)) {
 					ce = true;
-				} 
+				} else { cout << "Por favor introduce tu correo correctamente. Debe contener " << str2 << " y " << str3 << endl; }
+	
 			} while (ce == false);
 			bool v;
 			cin.ignore();
@@ -440,7 +441,8 @@ void mos() {
 	int s = 0;
 	do {
 		cout << dt[s].nom << " " << dt[s].ap << " " << dt[s].ce << " " << dt[s].t << " " << dt[s].m << " " << dt[s].dir << endl;
-		cout << fixed;
+		cout << fixed;								
+										/* Estas funciones son para hacer el truncamiento de las dos decimales en las calificaciones */
 		cout << setprecision(2); 
 		cout << "Calificacion 1 " << dt[s].cal[0] << endl;
 		cout << "Calificacion 2 " << dt[s].cal[1] << endl;
@@ -462,7 +464,8 @@ void sa() {
 		archivo << "Mail:" << dt[i].ce << endl;
 		archivo << "Matrícula: " << dt[i].m << endl;
 		cout << fixed;
-		cout << setprecision(2);
+									/* Estas funciones son para hacer el truncamiento de las dos decimales en las calificaciones */
+		cout << setprecision(2); // No importa lo que pase, aun metiendo 3 decimales seguira arrojando las dos necesarias
 		archivo << "Calificacíon 1: " << dt[i].cal[0] << endl;
 		archivo << "Calificacíon 2: " << dt[i].cal[1] << endl;
 		archivo << "Calificacíon 3: " << dt[i].cal[2] << endl;
