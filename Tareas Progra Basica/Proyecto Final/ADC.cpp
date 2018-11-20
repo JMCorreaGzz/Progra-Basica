@@ -440,6 +440,7 @@ void mos() {
 	system("cls");
 	int s = 0;
 	do {
+		double pm = 0;
 		cout << dt[s].nom << " " << dt[s].ap << " " << dt[s].ce << " " << dt[s].t << " " << dt[s].m << " " << dt[s].dir << endl;
 		cout << fixed;								
 										/* Estas funciones son para hacer el truncamiento de las dos decimales en las calificaciones */
@@ -447,6 +448,11 @@ void mos() {
 		cout << "Calificacion 1 " << dt[s].cal[0] << endl;
 		cout << "Calificacion 2 " << dt[s].cal[1] << endl;
 		cout << "Calificacion 3 " << dt[s].cal[2] << endl << endl;
+		pm = ((dt[s].cal[0] * .30) + (dt[s].cal[1] * .45) + (dt[s].cal[2] * .25));
+		if (dt[s].cal[0] == 0 || dt[s].cal[1] == 0 || dt[s].cal[2] == 0) {
+			pm = 0;
+		}
+		cout << "Promedio: " << pm << endl;
 		s++;
 	} while (s < ci);
 	system("pause");
@@ -463,9 +469,9 @@ void sa() {
 		archivo << "Numero de telefono: " << dt[i].t << endl;
 		archivo << "Mail:" << dt[i].ce << endl;
 		archivo << "Matrícula: " << dt[i].m << endl;
-		cout << fixed;
+		archivo << fixed;
 									/* Estas funciones son para hacer el truncamiento de las dos decimales en las calificaciones */
-		cout << setprecision(2); // No importa lo que pase, aun metiendo 3 decimales seguira arrojando las dos necesarias
+		archivo << setprecision(2); // No importa lo que pase, aun metiendo 3 decimales seguira arrojando las dos necesarias
 		archivo << "Calificacíon 1: " << dt[i].cal[0] << endl;
 		archivo << "Calificacíon 2: " << dt[i].cal[1] << endl;
 		archivo << "Calificacíon 3: " << dt[i].cal[2] << endl;
