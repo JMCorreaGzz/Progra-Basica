@@ -295,9 +295,20 @@ void ed() {
 				break; }
 				case 53: cout << "Direccion nueva" << endl;
 					getline(cin, dt[w].dir);
-				case 54: cout << "Correo electronico nuevo" << endl;
-					getline(cin, dt[w].ce);
-					break;
+				case 54: {
+					bool t=false;
+					do {
+						cin.ignore();
+						cout << "Correo electronico nuevo" << endl;
+						getline(cin, dt[w].ce);
+						string str1 = dt[w].ce;
+						string str22 = "@";
+						string str33= ".com";
+						if ((str1.find(str22) != string::npos) && (str1.find(str33) != string::npos)) {
+							t = true;
+						} else { cout << "Por favor introduce tu correo correctamente. Debe contener " << str22 << " y " << str33 << endl; }
+					} while (t == false);
+					break; }
 				}
 			}
 			w++;
@@ -447,12 +458,12 @@ void mos() {
 		cout << setprecision(2); 
 		cout << "Calificacion 1 " << dt[s].cal[0] << endl;
 		cout << "Calificacion 2 " << dt[s].cal[1] << endl;
-		cout << "Calificacion 3 " << dt[s].cal[2] << endl << endl;
+		cout << "Calificacion 3 " << dt[s].cal[2] << endl;
 		pm = ((dt[s].cal[0] * .30) + (dt[s].cal[1] * .45) + (dt[s].cal[2] * .25));
 		if (dt[s].cal[0] == 0 || dt[s].cal[1] == 0 || dt[s].cal[2] == 0) {
 			pm = 0;
 		}
-		cout << "Promedio: " << pm << endl;
+		cout << "Promedio: " << pm << endl << endl;
 		s++;
 	} while (s < ci);
 	system("pause");
