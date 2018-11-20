@@ -13,7 +13,7 @@ con sus respectivos datos personales.
 Su _objetivo_ es cumplir con las opciones correspondientes a una agenda digital,
 además de proporcionar el cálculo y almacenamiento de calificaciones de los
 correspondientes alumnos registrados.
-----
+
 # Índice:
 1. Menú de opciones.
 2. Posibles errores.
@@ -49,7 +49,7 @@ para su mayor comodidad.
 *__Salir__: Podrá salir del programa, una opción que desplegará al salir, es
 si usted desea de remover el archivo de texto, que se crea con la información
 registrada, en ese mismo momento.
-----
+
 ## 2. Posibles errores.
 -__Correo Electrónico__: Se deberá de introducir un "@" y un ".com", del caso
 contrario se seguirá repitiendo la captura de este dato hásta que lo ingrese 
